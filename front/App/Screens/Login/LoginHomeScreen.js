@@ -1,9 +1,10 @@
-import {Login} from '../../Components/Auth'
+import {Login, Subscribe} from '../../Components/Auth'
 
 export default function LoginHomeScreen(params) {
     return(
         <>
-            <Login></Login>
+            <Login/>
+            {/* <Subscribe /> */}
         </>
     )
 }

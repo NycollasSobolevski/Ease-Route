@@ -5,9 +5,7 @@ const Btn = ( params ) => {
 
     return (
         <>
-            <Button>
-                <Text>{{title}}</Text>
-            </Button>
+            <Button title={title}/>
         </>
     )
 }
