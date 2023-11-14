@@ -1,0 +1,14 @@
+:root{
+    --default-background-color: #152E58;
+    --semitransparent-background-color: #1d15158a;
+    --default-input-background-color: #1d151557;
+    --default-color: #fff;
+    --default-btn-color: #BBB079;
+    
+    --default-shadow-color: #ffffffb2;
+    --default-input-color: #fff;
+    --text-color-01: #21225B;
+    --default-link-color:#BBB079 ;
+    --font-family-01:"LexendTeraBold";
+    --font-family-02:"LexendTeraMedium";
+}
