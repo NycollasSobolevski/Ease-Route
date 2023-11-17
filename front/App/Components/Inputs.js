@@ -14,13 +14,13 @@ const EmailInput = (props) => {
     return (
         <View style={styles.InputContainer}>
             {title()}
-            <TextInput 
+            <TextInput
+                placeholderTextColor={"#797575cb"} 
                 style={styles.DefaultInput}
                 type="email" 
-                inputMode="email"
                 keyboardType="email-address"
                 placeholder={props.placeholder} 
-                onChange={props.onChange} 
+                onChangeText={props.onChange} 
                 value={props.value} 
             />
         </View>
@@ -41,16 +41,44 @@ const PasswordInput = (props) => {
         
         <View style={styles.InputContainer}>
             {title()}
-            <TextInput 
+            <TextInput
+                placeholderTextColor={"#797575cb"} 
                 style={styles.DefaultInput}
                 secureTextEntry={true}
-                inputMode="password"
                 type="password" 
                 placeholder={props.placeholder} 
-                onChange={props.onChange} 
+                onChangeText={props.onChange} 
                 value={props.value} 
             />
         </View>
     )
 }
-export {EmailInput,PasswordInput}
+const DefaultInput = (props) => {
+    const title = () => {
+        if(props.title)
+        {
+            return (
+                <Text 
+                    style={styles.DefaultInputLabel}>{props.title}</Text>
+            )
+        }
+    }
+    
+    return (
+        
+        <View style={styles.InputContainer}>
+            {title()}
+            <TextInput
+                placeholderTextColor={"#797575cb"} 
+                style={styles.DefaultInput}
+                type="none" 
+                keyboardType="default"
+                placeholder={props.placeholder} 
+                onChangeText={props.onChange} 
+                value={props.value} 
+            />
+        </View>
+    )
+}
+
+export {EmailInput,PasswordInput, DefaultInput}
