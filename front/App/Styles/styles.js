@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     StencilContainer:{
         position:"absolute",
         top: 75,
-        backgroundColor: "#000",
+        backgroundColor: "#21225B",
         paddingHorizontal: 20,
         paddingVertical: 10,
         borderRadius: 50,
@@ -115,6 +115,17 @@ const styles = StyleSheet.create({
         width:"100%", 
         height:"100%"
     },  
+    UserPositionMarker:{
+        width: 20,
+        height: 20,
+        backgroundColor: "#2842C8",
+        borderRadius: 100,
+        
+        shadowColor: '#000',
+        shadowOffset: {width: 5, height: 5},
+        shadowOpacity: 1,
+        shadowRadius: 5,
+    },
 
     //! Menu
     MenuContainer: {
@@ -136,6 +147,87 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 12,
         // fontFamily: "var(--font-family-02)",
+    },
+
+
+    ClickBackgroundToReturn:{
+        width:"100%",
+        height:"100%",
+        position:"absolute",
+        backgroundColor:"#00000070",
+        zIndex: 1,
+    },
+    SearchContainer: {
+        position: "absolute",
+        bottom: 100,
+        right: "10%",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "row",
+        gap:10,
+        zIndex:2,
+    },
+    SearchBtnContainer: {
+        width: 65,
+        height: 65,
+        backgroundColor: "#21225B",
+        borderRadius: 100,
+        alignItems: "center",
+        justifyContent: "center", 
+    },
+    SearchBtnLogo: {
+        height:30,
+        objectFit:"contain",
+        zIndex:3
+    },
+    SearchToolsContainer: {
+        position: "absolute",
+        bottom: 180,
+        right: "10%",
+        zIndex:2,
+        gap:7,
+        alignItems:"flex-end",
+
+    },
+    
+    SearchToolsBtn: {
+        width: 100,
+        height: 40,
+        backgroundColor: "#21225B",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 10,
+        marginVertical: 5,
+    },
+    
+    ToolContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap:10,
+
+    },
+    CircleBtnContainer: {
+        width: 50,
+        height: 50,
+        backgroundColor: "#8991AE",
+        borderRadius: 100,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    CircleBtnLogo: {
+        height: 30,
+        objectFit: "contain",
+    },
+
+
+    //! Search Screen
+    SearchScreenContainer: {
+        width: "100%",
+        height: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "absolute",
+
     },
 })
 

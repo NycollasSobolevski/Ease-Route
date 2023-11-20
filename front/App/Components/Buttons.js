@@ -1,9 +1,13 @@
 import {  Pressable, Text, Image, View } from "react-native"
-import styles from "../Styles/styles";
-
-import LogoStencil from "../../assets/Stencil.png"
 import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
 
+import styles from "../Styles/styles";
+import LogoStencil from "../../assets/Stencil.png"
+import SearchLogo from "../../assets/Icons/Search.png"
+import GasLogo from "../../assets/Icons/Gas.png"
+import RestaurantLogo from "../../assets/Icons/Restaurant.png"
+import HospitalLogo from "../../assets/Icons/Hospital.png"
 
 const DefaultBtn = ( params ) => {
     const title = params.text;
@@ -53,5 +57,74 @@ const MenuButtons = ( params ) => {
     )
 }
 
+const SearchButton = ( params ) => {
+    const nav = useNavigation();
+    const [tools, setTools] = useState(false);
 
-export {DefaultBtn, BrandButton, MenuButtons}
+    const searchClicked = () => {
+        if(!tools){
+            setTools(!tools);
+            return;
+        }
+        // nav.navigate("Search");
+        console.log(params.userLocation);
+
+    }
+
+    const renderTools = () => {
+        if(tools){
+            return(
+                <>
+                    <Pressable onPress={() => setTools(!tools)} style={styles.ClickBackgroundToReturn}/>
+
+                    <View style={styles.SearchToolsContainer}>
+                        <MenuToolCircleBtn image={GasLogo} label={"Gas"} showLabel={tools} />
+                        <MenuToolCircleBtn image={HospitalLogo} label={"Hospital"} showLabel={tools} />
+                        <MenuToolCircleBtn image={RestaurantLogo} label={"Restaurant"} showLabel={tools} />
+                    </View>
+                </>
+            )
+        }
+    }
+
+    const renderLabel = ( label ) => {
+        if(tools){
+            return(
+                <Text style={styles.SearchBtnLabel}>{label}</Text>
+            )
+        }
+    }
+    return(
+        <>
+            {renderTools()}
+            <View style={styles.SearchContainer}  >
+                {renderLabel("Search")}
+                <Pressable onPress={() => searchClicked()} style={styles.SearchBtnContainer}>
+                    <Image source={SearchLogo}  style={styles.SearchBtnLogo}  />
+                </Pressable>
+            </View>
+        </>
+    )
+}
+
+const MenuToolCircleBtn = ( params ) => {
+    const renderLabel = ( label ) => {
+        if(params.showLabel){
+            return(
+                <Text style={styles.SearchBtnLabel}>{label}</Text>
+            )
+        }
+    }
+    return(
+        <>
+        <View style={styles.ToolContainer}>
+            {renderLabel(params.label)}
+            <Pressable style={styles.CircleBtnContainer}>
+                <Image source={params.image} style={styles.CircleBtnLogo} />
+            </Pressable>
+        </View>
+        </>
+    )
+}
+
+export {DefaultBtn, BrandButton, MenuButtons, SearchButton}

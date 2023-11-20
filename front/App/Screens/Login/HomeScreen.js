@@ -1,21 +1,51 @@
-import { View, Text, Image } from "react-native"
+import { View, Text, Image, PermissionsAndroid } from "react-native"
 import { Marker} from 'react-native-maps';
 import MapView from 'react-native-maps';
-
+import * as Location from 'expo-location';
 import styles from "../../Styles/styles"
 // import LogoStencil from "../../../assets/Stencil.png"
 
-import { BrandButton } from "../../Components/Buttons"
+import { BrandButton, SearchButton } from "../../Components/Buttons"
 import Menu from "../../Components/Menu"
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+
 
 export default function HomeScreen() {
-    const muellerLocation ={
-        latitude: -25.4230246, 
-        longitude: -49.2710027,
-        latitudeDelta: 0.005,
-        longitudeDelta: 0.005
+    const [latitude, setLatitude] = useState(0);
+    const [longitude, setLongitude] = useState(0);
+    const [latitudeDelta, setLatitudeDelta] = useState(0.005);
+    const [longitudeDelta, setLongitudeDelta] = useState(0.005);
+    const UserLocation = {
+        latitude: latitude, 
+        longitude: longitude,
+        latitudeDelta: latitudeDelta,
+        longitudeDelta: longitudeDelta
     }
+    const getUserLocation = async () => {
+        // Solicitar permissão para acessar a localização do dispositivo
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+            console.error('Permissão de localização não concedida');
+            return;
+        }
+      
+        // Obter a localização do dispositivo
+        let location = await Location.getCurrentPositionAsync({});
+        setLatitude( location.coords.latitude);
+        setLongitude( location.coords.longitude);
+    }
+
+    useEffect(() => {
+        getUserLocation();
+        const intervalId = setInterval(getUserLocation, 1000);
+        setTimeout(() => {
+            getUserLocation();
+        }, 1000);
+    }, []);
+
+      
+    
 
     return (
         <View style={styles.Screen}>
@@ -23,17 +53,20 @@ export default function HomeScreen() {
             
             <MapView  
                 style={styles.MapContainer} 
-                region={muellerLocation}
+                region={UserLocation}
             >
                 
                 <Marker
-                    coordinate={{latitude: muellerLocation.latitude, longitude:muellerLocation.longitude}}
-                    title={"um lugar"}
-                    description={"marker.description"}
-                />
+                    coordinate={{latitude: latitude, longitude:longitude}}
+                    // title={"um lugar"}
+                    // description={"marker.description"}
+                >
+                    <View style={styles.UserPositionMarker} />
+                </Marker>
                 
             </MapView>
 
+            <SearchButton userLocation={UserLocation} /> 
             <Menu />
         </View>
     )

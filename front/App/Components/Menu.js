@@ -12,19 +12,19 @@ export default function Menu( params ) {
         <View style={styles.MenuContainer}>
             <MenuButtons 
                 image={HistoricLogo} 
-                label={"Historic"} 
-                route={"Historic"}
+                label={"Activity"} 
+                route={"History"}
             />
             <MenuButtons 
                 image={FavoriteLogo}
                 // imageStyle={{width: 100, height: 100}}
                 label={"Favorites"} 
-                route={"Historic"}
+                route={"Favorites"}
             />
             <MenuButtons 
                 image={SettingsLogo} 
                 label={"Settings"} 
-                route={"Historic"}
+                route={"Settings"}
             />
         </View>
     )

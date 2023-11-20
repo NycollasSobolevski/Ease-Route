@@ -6,6 +6,7 @@ import FontFace from './App/Styles/fonts/fontface';
 // import "./App/Styles/styles.css"
 // import "./App/Styles/DefaultTheme.css"
 import HomeScreen from './App/Screens/Login/HomeScreen';
+import SearchScreen from './App/Screens/Login/SearchScreen';
 
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen name="Login" options={{headerShown:false}} component={LoginHomeScreen} />
           <Stack.Screen name="Home" options={{headerShown:false}} component={HomeScreen} />
+          <Stack.Screen name="Search" options={{headerShown:false}} component={SearchScreen} />
         </Stack.Navigator>
       </NavigationContainer>
   </>
