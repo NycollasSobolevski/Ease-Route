@@ -66,8 +66,8 @@ const SearchButton = ( params ) => {
             setTools(!tools);
             return;
         }
-        // nav.navigate("Search");
-        console.log(params.userLocation);
+        nav.navigate("Search");
+        // console.log(params.userLocation);
 
     }
 

@@ -229,6 +229,46 @@ const styles = StyleSheet.create({
         position: "absolute",
 
     },
+
+    SearchInpuContainer: {
+        backgroundColor: "#21225B",
+        // width: "80%",
+        height: 55,
+        padding:5,
+        gap:5,
+        borderRadius:100,
+        flexDirection:"row",
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex:5,
+
+
+    },
+    InputWhiteShadow:{
+        shadowColor: '#fff',
+        shadowOffset: {width: 10, height: 10},
+        shadowOpacity: 1,
+        shadowRadius: 10,
+        elevation: 10,
+    },
+    SearchInput: {
+        width: "80%",
+        height: 50,
+        paddingLeft: 15,
+        fontSize: 18,
+        color: "#fff",
+        // fontFamily: "var(--font-family-02)",
+    },
+    InputPressable: {
+        // backgroundColor: "#fff",
+        width: "10%",
+        margin:5
+    },
+    InputLogo:{
+        width:40,
+        height:40,
+        objectFit:"contain",
+    },
 })
 
 
