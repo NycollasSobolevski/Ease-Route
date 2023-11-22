@@ -34,7 +34,9 @@ const BrandButton = ( params ) => {
         <>
             <Pressable 
                 style={styles.StencilContainer}
-                onPress={() => navigate.navigate('Home')}
+                // onPress={() => navigate.navigate('Home')}
+                onPressOut={params.action}
+
             >
                 <Image source={LogoStencil} style={styles.LogoScript} />
             </Pressable>
@@ -108,23 +110,32 @@ const SearchButton = ( params ) => {
 }
 
 const MenuToolCircleBtn = ( params ) => {
-    const renderLabel = ( label ) => {
-        if(params.showLabel){
+    const renderLabel = ( label, position = 'left' ) => {
+        if(params.showLabel && position == params.LabelSide){
             return(
-                <Text style={styles.SearchBtnLabel}>{label}</Text>
+                <Text style={ styles.DefaultBtnText}>{label}</Text>
             )
         }
     }
     return(
         <>
-        <View style={styles.ToolContainer}>
-            {renderLabel(params.label)}
-            <Pressable style={styles.CircleBtnContainer}>
-                <Image source={params.image} style={styles.CircleBtnLogo} />
-            </Pressable>
-        </View>
+            <View style={styles.ToolContainer}>
+                {renderLabel(params.label)}
+                <View style={{alignItems:"center"}}>
+                    {renderLabel(params.label, "top")}
+                    
+                    <Pressable onPressOut={() => params.onClick()} style={[styles.CircleBtnContainer, {backgroundColor: params.backgroundColor}]}>
+                        <Image source={params.image} style={styles.CircleBtnLogo} />
+                    </Pressable>
+                    
+                    {renderLabel(params.label, "bottom")}
+                </View>
+                {renderLabel(params.label, "right")}
+                
+
+            </View>
         </>
     )
 }
 
-export {DefaultBtn, BrandButton, MenuButtons, SearchButton}
+export {DefaultBtn, BrandButton, MenuButtons, SearchButton, MenuToolCircleBtn}

@@ -1,7 +1,6 @@
-import { View, Text, Image, PermissionsAndroid } from "react-native"
+import { View, Text, Image, PermissionsAndroid, Pressable, StyleSheet } from "react-native"
 import { Marker} from 'react-native-maps';
 import MapView from 'react-native-maps';
-import * as Location from 'expo-location';
 import styles from "../../Styles/styles"
 // import LogoStencil from "../../../assets/Stencil.png"
 
@@ -9,43 +8,30 @@ import { BrandButton, SearchButton } from "../../Components/Buttons"
 import Menu from "../../Components/Menu"
 import { useEffect, useState } from "react";
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+import UserMarker from "../../Components/UserMarker";
 
 
 export default function HomeScreen() {
-    const [latitude, setLatitude] = useState(0);
-    const [longitude, setLongitude] = useState(0);
-    const [latitudeDelta, setLatitudeDelta] = useState(0.005);
-    const [longitudeDelta, setLongitudeDelta] = useState(0.005);
-    const UserLocation = {
-        latitude: latitude, 
-        longitude: longitude,
-        latitudeDelta: latitudeDelta,
-        longitudeDelta: longitudeDelta
-    }
-    const getUserLocation = async () => {
-        // Solicitar permissão para acessar a localização do dispositivo
-        let { status } = await Location.requestForegroundPermissionsAsync();
-        if (status !== 'granted') {
-            console.error('Permissão de localização não concedida');
-            return;
-        }
-      
-        // Obter a localização do dispositivo
-        let location = await Location.getCurrentPositionAsync({});
-        setLatitude( location.coords.latitude);
-        setLongitude( location.coords.longitude);
-    }
-
-    useEffect(() => {
-        getUserLocation();
-        const intervalId = setInterval(getUserLocation, 1000);
-        setTimeout(() => {
-            getUserLocation();
-        }, 1000);
-    }, []);
-
-      
+    const [userLocation, setUserLocation] = useState();
+    const [MapLocation, setMapLocation] = useState({
+        latitude: 0, 
+        longitude: 0,
+        latitudeDelta: 0.005,
+        longitudeDelta: 0.005
+    });
     
+
+    //todo: centralizar o mapa na localização do usuário
+    const centralizeMap = () => {
+        console.log('centralizeMap');
+        console.log(userLocation,"\n\n" ,MapLocation);
+        setMapLocation({
+            latitude: userLocation.latitude,
+            longitude: userLocation.longitude,
+            latitudeDelta: 0.005,
+            longitudeDelta: 0.005
+        })
+    }
 
     return (
         <View style={styles.Screen}>
@@ -53,21 +39,20 @@ export default function HomeScreen() {
             
             <MapView  
                 style={styles.MapContainer} 
-                region={UserLocation}
+                region={MapLocation}
+                onRegionChangeComplete={(R) => console.log(R)}
             >
-                
-                <Marker
-                    coordinate={{latitude: latitude, longitude:longitude}}
-                    // title={"um lugar"}
-                    // description={"marker.description"}
-                >
-                    <View style={styles.UserPositionMarker} />
-                </Marker>
-                
+                <UserMarker 
+                    MapLocation={MapLocation} 
+                    setMapLocation={setMapLocation}
+                    setUserLocation={setUserLocation}
+                />   
             </MapView>
-
-            <SearchButton userLocation={UserLocation} /> 
+            
+            <SearchButton userLocation={MapLocation}  /> 
             <Menu />
         </View>
     )
 }
+
+

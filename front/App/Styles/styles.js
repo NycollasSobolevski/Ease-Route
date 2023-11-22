@@ -13,6 +13,58 @@ const styles = StyleSheet.create({
 
         
     },
+    //! GENERAL STYLES
+    RowContainer:{
+        flexDirection:"row",
+        alignItems:"center",
+        justifyContent:"space-evenly",
+    },
+    SwipeBar: {
+        width: 75,
+        height: 5,
+        backgroundColor: "#fff",
+        borderRadius: 100,
+    },
+    //! TEXT STYLES
+    DefaultText: {
+        // color: "var(--text-color-01)",
+        color: "#fff",
+        fontSize: 18,
+        // fontFamily: "var(--font-family-02)",
+    },
+    DefaultLabel:{
+        fontSize: 25,   
+        // color:'var(--default-input-color)',
+        // fontFamily: "var(--font-family-01)",
+        color:'#fff',
+    },
+    DefaultInputLabel: {
+        fontSize: 18,   
+        // color:'var(--default-input-color)',
+        // fontFamily: "var(--font-family-01)",
+        color:'#fff',
+        paddingLeft: 15,
+    },
+    DefaultBtnText: {
+        color: "#fff",
+        fontSize: 18,
+    },
+    DefaultBtnBoldText: {
+        // color: "var(--text-color-01)",
+        color: "#21225B",
+        fontSize:35,
+        fontWeight: "bold",     
+
+        // fontFamily: "var(--font-family-01)",
+    },
+    MenuBtnLabel: {
+        color: "#fff",
+        fontSize: 12,
+        // fontFamily: "var(--font-family-02)",
+    },
+    
+
+
     AuthContainer: {
         width: 350,
         height: "90%",
@@ -55,13 +107,6 @@ const styles = StyleSheet.create({
         elevation: 10,
 
     },
-    DefaultInputLabel: {
-        fontSize: 18,   
-        // color:'var(--default-input-color)',
-        // fontFamily: "var(--font-family-01)",
-        color:'#fff',
-        paddingLeft: 15,
-    },
     
     LogoScript:{
         width: 250, 
@@ -82,14 +127,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         borderRadius: 15
     },
-    DefaultBtnText: {
-        // color: "var(--text-color-01)",
-        color: "#21225B",
-        fontSize:35,
-        fontWeight: "bold",     
-
-        // fontFamily: "var(--font-family-01)",
-    },
+    
     Link: {
         // color: "var(--default-link-color)",
         color: "#BBB079",
@@ -143,11 +181,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-    MenuBtnLabel: {
-        color: "#fff",
-        fontSize: 12,
-        // fontFamily: "var(--font-family-02)",
-    },
+    
 
 
     ClickBackgroundToReturn:{
@@ -241,8 +275,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         zIndex:5,
-
-
+        position:"absolute",
+        top:100
     },
     InputWhiteShadow:{
         shadowColor: '#fff',
@@ -268,6 +302,31 @@ const styles = StyleSheet.create({
         width:40,
         height:40,
         objectFit:"contain",
+    },
+
+    //! Search Card
+    SearchCardContainer: {
+        position: "absolute",
+        bottom: 0,
+        width: "100%",
+        height: "35%",
+        backgroundColor: "#202159D9",
+        borderTopLeftRadius: 20,
+        borderTopEndRadius: 20,
+        padding: 20,
+        alignItems: "center",
+        justifyContent: "space-between",
+    },
+    SearchCardHeaderContainer:{
+        alignItems:"center",
+        justifyContent:"center",
+        gap:10,
+    },
+    SearchCardMainContainer: {
+        width: "100%",
+        // height: "80%",
+        // alignItems: "center",
+        // justifyContent: "space-between",
     },
 })
 

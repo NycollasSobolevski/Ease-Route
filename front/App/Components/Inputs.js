@@ -114,6 +114,7 @@ const SearchInput = (props) => {
                 description:`` });
         });
 
+        props.onSearchClick(responseArray[0].latitude, responseArray[0].longitude);
     }
 
     return (
@@ -123,11 +124,12 @@ const SearchInput = (props) => {
             <TextInput
                 placeholderTextColor={"#797575cb"} 
                 style={styles.SearchInput}
-                type="none" 
                 keyboardType="default"
                 placeholder={'Search'} 
                 onChangeText={setInputValue} 
                 value={inputValue} 
+                autoFocus={true}
+                inputMode="search"
             />
             <Pressable onPressOut={() => searchClicked()} style={[styles.InputPressable]}>
                 <Image source={SearchLogo} style={styles.InputLogo} />
