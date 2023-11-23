@@ -4,9 +4,14 @@ import { MenuToolCircleBtn } from "../Buttons"
 
 import favoriteIcon from '../../../assets/Icons/GoldenFavorite.png'
 import routeIcon from '../../../assets/Icons/GoldenRoute.png'
+import { useDispatch } from "react-redux"
+import { searchPageSlice } from "../../Redux/searchPageSlice"
 
 export default SearchRouteCard = ( params ) => {
     
+    const dispatch = useDispatch();
+    const { setPage } = searchPageSlice.actions;
+
     return(
         <>
             <View style={styles.SearchCardContainer}>
@@ -16,8 +21,8 @@ export default SearchRouteCard = ( params ) => {
                 </View>
                 <View style={styles.SearchCardMainContainer}>
                     <View style={styles.RowContainer}>
-                        <MenuToolCircleBtn onClick={() => params.setPageIndex(2)} image={routeIcon} LabelSide={"bottom"} showLabel={true} label={"Routes"}  backgroundColor={"#21225B"} />
-                        <MenuToolCircleBtn onClick={() => params.setPageIndex(3)} image={favoriteIcon} LabelSide={"bottom"} showLabel={true} label={"Save"} backgroundColor={"#21225B"} />
+                        <MenuToolCircleBtn onClick={() => dispatch(setPage('search-route'))} image={routeIcon} LabelSide={"bottom"} showLabel={true} label={"Routes"}  backgroundColor={"#21225B"} />
+                        <MenuToolCircleBtn onClick={() => dispatch(setPage('search-save'))} image={favoriteIcon} LabelSide={"bottom"} showLabel={true} label={"Save"} backgroundColor={"#21225B"} />
                     </View>
                 </View>
                     <Text style={styles.DefaultText}>{'params.description'}</Text>

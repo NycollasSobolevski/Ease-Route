@@ -111,6 +111,9 @@ const SearchButton = ( params ) => {
 
 const MenuToolCircleBtn = ( params ) => {
     const renderLabel = ( label, position = 'left' ) => {
+        
+        params.LabelSide !== undefined ? "" : params.LabelSide = "left";
+
         if(params.showLabel && position == params.LabelSide){
             return(
                 <Text style={ styles.DefaultBtnText}>{label}</Text>

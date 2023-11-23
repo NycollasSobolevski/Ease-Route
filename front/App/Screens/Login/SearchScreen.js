@@ -7,10 +7,16 @@ import { useEffect, useState } from "react";
 import { SearchInput } from "../../Components/Inputs";
 import UserMarker from "../../Components/UserMarker";
 import SearchCard from "../../Components/Search/SearchCard";
+import { useSelector } from "react-redux";
+import { searchPageSlice } from "../../Redux/searchPageSlice";
+import RoutesCard from "../../Components/Search/RoutesCard";
+import SavePinCard from "../../Components/Search/SavePinCard";
 
 export default function SearchScreen() {
-    const [locationData, setLocationData] = useState();
-    const [pageIndex, setPageIndex] = useState(0);
+    
+    const { value: searchPageIndex } = useSelector((store) => store.searchPage);
+    const { setPage } = searchPageSlice;
+
     const [MarkLocation, setMarkLocation] = useState({
         latitude: -25.514249, 
         longitude: -49.283341,
@@ -31,6 +37,7 @@ export default function SearchScreen() {
         )
     };
 
+    ///
     const settinLocation = (lat, lon) => {
         console.log(lat, lon);
         setMarkLocation({
@@ -39,21 +46,20 @@ export default function SearchScreen() {
         })
         console.log(MarkLocation);
         setMark(true)
-        setPageIndex(1)
+        // todo: add to regex
     };
-    const switchContainer = (number) => {
-        console.log(number);
-        // setPageIndex(number);
-    }
+    
+    /// renderiza de acordo com o valor do searchPageIndex ( REDUX ) que é setado dentro dos componentes
     const renderCard = () => {
-        switch(pageIndex) {
+        switch( searchPageIndex ) {
             case 0:
                 return <></>
-            case 1:
-                // ! REDUX aqui 
-                return <SearchCard setPageIndex={switchContainer} />
-            case 2:
-                return <></>
+            case 'search-options':
+                return <SearchCard />
+            case 'search-route':
+                return <RoutesCard />
+            case 'search-save':
+                return <SavePinCard />
         }
     };
 

@@ -3,7 +3,8 @@ import styles from "../Styles/styles"
 import SearchLogo from "../../assets/Icons/Search.png"
 import { useState } from "react"
 import GeoapifyService from "../Services/geoapify"
-
+import { searchPageSlice } from "../Redux/searchPageSlice"
+import { useDispatch } from "react-redux"
 
 const EmailInput = (props) => {
     const title = () => {
@@ -85,9 +86,9 @@ const DefaultInput = (props) => {
     )
 }
 const SearchInput = (props) => {
-    const [latitude, setLatitude] = useState(0);
-    const [longitude, setLongitude] = useState(0);
+    const dispatch = useDispatch();
     const [inputValue, setInputValue] = useState("");
+    
     const title = () => {
         if(props.title)
         {
@@ -101,20 +102,23 @@ const SearchInput = (props) => {
     }
     
     const searchClicked = async () => {
+        const { setPage } = searchPageSlice.actions;
+        
+
         let responseArray = [];
         // props.onSearchClick(latitude, longitude);
-        console.log('search clicked');
         const res = await GeoapifyService.getCoordsByString(encodeURI(inputValue));
         const data = res.data.features;
         data.forEach(coordinates => {
-            console.log(coordinates.geometry.coordinates[0], coordinates.geometry.coordinates[1]);
             responseArray.push({
                 latitude: coordinates.geometry.coordinates[1], 
                 longitude: coordinates.geometry.coordinates[0], 
                 description:`` });
-        });
-
+            });
+            
         props.onSearchClick(responseArray[0].latitude, responseArray[0].longitude);
+        console.log('search clicked');
+        dispatch(setPage("search-options"));
     }
 
     return (

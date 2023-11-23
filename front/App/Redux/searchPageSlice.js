@@ -1,21 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const pageInitialValue = {
-    value: 0,
+    value: "none",
 }
 
 export const searchPageSlice = createSlice({
     name: "searchPage",
     initialState: pageInitialValue,
     reducers: {
-        increment: (state) => {
-            state.value += 1;
+        setPage: (state, action) => {
+            state.value = action.payload;
+            console.log(state.value);
         },
-        decrement: (state) => {
-            state.value -= 1;
-        },
-        incrementByAmount: (state, action) => {
-            state.value += action.payload;
-        },
+        goToInitPage: (state) => {
+            state.value = "none";
+        }
     },
 })
