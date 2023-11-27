@@ -14,4 +14,9 @@ public interface IUserRepository extends MongoRepository<UserModel, String> {
 
     @Query("{ 'age' : ?0, 'name' : ?1 }")
     List<UserModel> findByAgeAndName( short age, String name );
+
+    @Query("{ 'email' : ?0}")
+    List<UserModel> findByEmail(String email);
+
+    
 }
