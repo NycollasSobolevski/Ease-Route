@@ -1,4 +1,4 @@
-package com.nycollas.backend.Auth;
+package com.nycollas.backend.DTO.Auth;
 
 import lombok.Data;
 

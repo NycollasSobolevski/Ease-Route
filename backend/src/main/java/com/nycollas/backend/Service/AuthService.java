@@ -24,7 +24,7 @@ public class AuthService implements UserDetailsService {
     @Value("${jwt.secret}")
     private String secret;
 
-    @Value("${jet.issuer}")
+    @Value("${jwt.issuer}")
     private String issuer;
 
     public String createToken(UserModel user){

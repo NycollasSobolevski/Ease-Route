@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nycollas.backend.Auth.UserLogin;
+import com.nycollas.backend.DTO.Auth.UserLogin;
 import com.nycollas.backend.Model.UserModel;
 import com.nycollas.backend.Service.UserService;
 import com.nycollas.backend.Tools.Password;
