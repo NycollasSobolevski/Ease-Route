@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nycollas.backend.DTO.Auth.UserLogin;
 import com.nycollas.backend.Model.UserModel;
+import com.nycollas.backend.Service.AuthService;
 import com.nycollas.backend.Service.UserService;
 import com.nycollas.backend.Tools.Password;
 
@@ -23,7 +24,7 @@ import com.nycollas.backend.Tools.Password;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-    
+    private AuthService authService = new AuthService();
     @Autowired
     private UserService userService;
 
@@ -34,14 +35,27 @@ public class AuthController {
     ) 
     {
 
-        UserModel user = this.userService.findByIdentify(body.getIdentify())
-            .stream()
-            .findFirst()
-            .get();
+        try{
+            
+            UserModel user = this.userService.findByIdentify(body.getIdentify())
+                .stream()
+                .findFirst()
+                .get();
+    
+            System.out.print(user.getName());
+            if(!Password.CompareHash(body.getPassword(), user.getPassword()))
+                return new ResponseEntity<String>("Login or password dont matches", HttpStatus.UNAUTHORIZED);
+            
+            System.out.println(user.getName());
 
-        System.out.print(user.getName());
+            String token = this.authService.createToken(user);
 
-        return new ResponseEntity<String>("xalalal", HttpStatus.OK);
+            return new ResponseEntity<String>(token, HttpStatus.OK);
+    
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return new ResponseEntity<String>("Unknow server error", HttpStatus.BAD_REQUEST);
+        }
     }
  
     @PostMapping("/subscribe")
