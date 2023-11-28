@@ -3,7 +3,11 @@ package com.nycollas.backend.Filter;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.nycollas.backend.Service.AuthService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -13,13 +17,31 @@ import jakarta.servlet.http.HttpServletResponse;
 public class SecurityFilter extends OncePerRequestFilter {
 
     @Autowired
-    // private AuthService
+    private AuthService authService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+    protected void doFilterInternal(final HttpServletRequest request,
+            final HttpServletResponse response,
+            final FilterChain filterChain)
             throws ServletException, IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'doFilterInternal'");
-    }
-    
+
+        final var anAuthToken = request.getHeader("Authorization");
+
+        if (anAuthToken != null) {
+
+            final var aToken = anAuthToken.replace("Bearer ", "");
+
+            final var anUsername = this.authService.ValidateToken(aToken);
+
+            final var anUser = this.authService.loadUserByUsername(anUsername);
+
+            final var auth = new UsernamePasswordAuthenticationToken(anUser,
+                    null,
+                    anUser.getAuthorities());
+
+            SecurityContextHolder.getContext().setAuthentication(auth);
+        }
+
+        filterChain.doFilter(request, response);
+    } 
 }

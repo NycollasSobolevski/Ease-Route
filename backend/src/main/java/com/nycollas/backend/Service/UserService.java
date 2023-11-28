@@ -1,19 +1,8 @@
 package com.nycollas.backend.Service;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.security.AlgorithmConstraints;
-import java.security.MessageDigest;
-import java.util.Base64;
 import java.util.List;
-import java.util.Random;
-
-import org.apache.logging.log4j.message.Message;
-import org.bouncycastle.crypto.Digest;
-import org.bouncycastle.util.Bytes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.tags.MessageTag;
 
 import com.nycollas.backend.Model.UserModel;
 import com.nycollas.backend.Repository.IUserRepository;
@@ -47,8 +36,29 @@ public class UserService {
         // this.userRepository.update(user);
     }
 
-    
-    public UserModel save(UserModel user) {
-        return this.userRepository.save(user);
+    public UserModel save(UserModel userModel) {
+        return this.userRepository.save(userModel);
     }
+
+    public void save(String id, String name, short age) {
+        this.userRepository.save(new UserModel(id, name, age));
+    }
+
+    public List<UserModel> findByName(String name) {
+        return (List<UserModel>) this.userRepository.findByName(name);
+    }
+
+    public UserModel findByEmail(String email) {
+        return (UserModel) this.userRepository.findByEmail(email);
+    }
+
+    public List<UserModel> findByAgeAndName(short age, String name) {
+        return (List<UserModel>) this.userRepository.findByAgeAndName(age, name);
+    }
+
+    public void delete(String id) {
+        this.userRepository.deleteById(id);
+    }
+
+
 }

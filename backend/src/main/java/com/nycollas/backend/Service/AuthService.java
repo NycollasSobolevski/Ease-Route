@@ -2,10 +2,8 @@ package com.nycollas.backend.Service;
 
 import java.util.Date;
 
-import org.bouncycastle.operator.AlgorithmNameFinder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties.Jwt;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,8 +13,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.nycollas.backend.Exception.AuthException;
-
-
 import com.nycollas.backend.Model.UserModel;
 
 @Service
@@ -80,5 +76,4 @@ public class AuthService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found");
         }
     }
-    
 }

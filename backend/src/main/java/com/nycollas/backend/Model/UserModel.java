@@ -32,6 +32,12 @@ public class UserModel implements UserDetails {
     }
     public UserModel() {
     }
+    public UserModel( String _id, String name, short age){
+        // UserModel(id, name, age)
+        this.name = name;
+        this.id = _id;
+        this.age = age;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

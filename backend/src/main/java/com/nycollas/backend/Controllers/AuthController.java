@@ -41,11 +41,11 @@ public class AuthController {
 
         System.out.print(user.getName());
 
-        return new ResponseEntity("xalalal", HttpStatus.OK);
+        return new ResponseEntity<String>("xalalal", HttpStatus.OK);
     }
  
     @PostMapping("/subscribe")
-    public ResponseEntity Subscribe(
+    public ResponseEntity<String> Subscribe(
         @RequestBody UserModel body
     )
     {
