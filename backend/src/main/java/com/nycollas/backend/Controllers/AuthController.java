@@ -5,13 +5,16 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nycollas.backend.DTO.Auth.UserLogin;
@@ -24,7 +27,10 @@ import com.nycollas.backend.Tools.Password;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-    private AuthService authService = new AuthService();
+
+    @Autowired
+    private AuthService authService;
+
     @Autowired
     private UserService userService;
 
@@ -42,11 +48,9 @@ public class AuthController {
                 .findFirst()
                 .get();
     
-            System.out.print(user.getName());
             if(!Password.CompareHash(body.getPassword(), user.getPassword()))
                 return new ResponseEntity<String>("Login or password dont matches", HttpStatus.UNAUTHORIZED);
             
-            System.out.println(user.getName());
 
             String token = this.authService.createToken(user);
 
@@ -101,10 +105,17 @@ public class AuthController {
     }
 
     @GetMapping("/test")
-    public String Test()
+    public String Test(
+        @RequestParam("longitude") String longitude,
+        @RequestParam("latitude") String latitude
+    )
     {
         // return this.userService.GetHash("123", this.userService.GenerateSalt(5));
+        // System.out.println(text);
+        // return text;
+        System.out.println("${latitude}" + latitude);
+        System.out.println("${longitude}" + longitude);
 
-        return "asdfasdfasdf";
+        return "text";
     }
 }

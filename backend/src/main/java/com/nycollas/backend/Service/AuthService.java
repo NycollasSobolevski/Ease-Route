@@ -21,14 +21,15 @@ public class AuthService implements UserDetailsService {
     @Autowired
     private UserService userService;
 
-    @Value("${jwt.secret}")
-    private String secret;
+    @Value("${jwt_secret:string}")
+    String secret;
 
     @Value("${jwt.issuer}")
-    private String issuer;
+    String issuer;
 
     public String createToken(UserModel user){
         try{
+
             final var anAlgorithm = Algorithm.HMAC256(secret);
             
             final String aToken = JWT.create()
