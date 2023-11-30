@@ -21,7 +21,7 @@ public class AuthService implements UserDetailsService {
     @Autowired
     private UserService userService;
 
-    @Value("${jwt_secret:string}")
+    @Value("${jwt.secret}")
     String secret;
 
     @Value("${jwt.issuer}")
@@ -52,13 +52,14 @@ public class AuthService implements UserDetailsService {
         try{
             final var anAlgorithm = Algorithm.HMAC256(secret);
             final var decoded = JWT.require(anAlgorithm)
-                .withIssuer(token)
+                .withIssuer(issuer)
                 .build()
                 .verify(token);
             final var anSubjet =  decoded.getSubject();
             return anSubjet;
         }
         catch (Exception e){
+            System.out.println(e.getMessage());
             return "";
         }
     }

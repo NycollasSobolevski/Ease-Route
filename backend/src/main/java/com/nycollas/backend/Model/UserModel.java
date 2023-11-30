@@ -10,6 +10,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.nycollas.backend.DTO.Locations.SaveLocationDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -25,6 +27,7 @@ public class UserModel implements UserDetails {
     private String email;
     private String password;
     private short  age;
+    private List<SaveLocationDTO> favorites;
 
     public UserModel(String name, short age) {
         this.name = name;

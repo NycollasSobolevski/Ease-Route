@@ -1,5 +1,6 @@
 package com.nycollas.backend.Controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nycollas.backend.DTO.Auth.UserLogin;
+import com.nycollas.backend.DTO.Locations.SaveLocationDTO;
 import com.nycollas.backend.Model.UserModel;
 import com.nycollas.backend.Service.AuthService;
 import com.nycollas.backend.Service.UserService;
@@ -89,7 +91,7 @@ public class AuthController {
             user.setEmail(body.getEmail());
             user.setName(body.getName());
             user.setPassword( Password.ApplyHash(body.getPassword()) );
-            
+            user.setFavorites(new ArrayList<SaveLocationDTO>());
             System.out.println("=========================================== try ===============================================");
             this.userService.create(user);
 
