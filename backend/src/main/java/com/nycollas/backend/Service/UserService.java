@@ -22,10 +22,11 @@ public class UserService {
         this.userRepository.delete(user);
     }
     public void create( UserModel user ) {
+        System.out.println("User: " + user);
         this.userRepository.save(user);
     }
     public void update( UserModel user ) {
-        this.userRepository.update(user);
+        // this.userRepository.update(user);
     }
 
     public UserModel save(UserModel user) {

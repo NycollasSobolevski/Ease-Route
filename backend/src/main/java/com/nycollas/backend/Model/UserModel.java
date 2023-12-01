@@ -15,12 +15,13 @@ public class UserModel {
     @Id
     private String id;
     private String name;
+    private String email;
+    private String password;
     private short age;
 
     public UserModel(String name, short age) {
         this.name = name;
         this.age = age;
     }
-    public UserModel() {
-    }
+    public UserModel() { }
 }
