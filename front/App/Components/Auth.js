@@ -7,6 +7,7 @@ import {useNavigation} from '@react-navigation/native'
 
 import {DefaultBtn} from './Buttons'
 import { EmailInput, PasswordInput, DefaultInput } from "./Inputs"
+import AuthService from "../Services/authService"
 
 const Login = ( params ) => {
     const navigation = useNavigation();
@@ -14,13 +15,16 @@ const Login = ( params ) => {
     const [login, setLogin] = useState("")
     const [password, setPassword] = useState("")
 
-    const Login = (props) => {
+    const Login = async (props) => {
         var body ={ 
-            login: login,
+            identify: login,
             password: password
         }
         console.log(body);
-
+        var res = await AuthService.Login( body );
+        console.log(res);
+        //!Verificar res para navegar  e alterar no session
+        sessionStorage.setItem("token", res)
         navigation.navigate('Home')
     }
 
@@ -68,15 +72,20 @@ const Subscribe = ( params ) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [repassword, setRepassword] = useState("")
+    const [age, setAge] = useState(0)
 
-    const Subscribe = (props) => {
+    const Subscribe = async (props) => {
         var body = {
-            login: login,
+            name: login,
+            age: age,
             email: email,
             password: password,
             repassword: repassword
         }
-        console.log(body );
+        console.log( body );
+        const res = await AuthService.Subscribe( body )
+        //!Verificar res para navegar  e alterar no session
+
     }
 
     return (

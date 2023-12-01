@@ -1,71 +1,123 @@
 package com.nycollas.backend.Controllers;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+import org.springframework.data.mongodb.repository.Query;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nycollas.backend.DTO.Auth.SubscribeUserDto;
+import com.nycollas.backend.DTO.Auth.UserLogin;
+import com.nycollas.backend.DTO.Locations.SaveLocationDTO;
 import com.nycollas.backend.Model.UserModel;
+import com.nycollas.backend.Service.AuthService;
 import com.nycollas.backend.Service.UserService;
-import com.nycollas.backend.Services.Passwords;
+import com.nycollas.backend.Tools.Password;
 
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-    
+
+    @Autowired
+    private AuthService authService;
+
     @Autowired
     private UserService userService;
 
-    @GetMapping("")
-    public List<UserModel> getAllUsers() {
-        List<UserModel> users = this.userService.findAll();
-        return users;
-    }
 
-    @PostMapping("/create")
-    public ResponseEntity<String> createUser(
+    @PostMapping("/login")
+    public ResponseEntity<String> Login(
+        @RequestBody UserLogin body
+    ) 
+    {
+
+        try{
+            
+            UserModel user = this.userService.findByIdentify(body.getIdentify())
+                .stream()
+                .findFirst()
+                .get();
+    
+            if(!Password.CompareHash(body.getPassword(), user.getPassword()))
+                return new ResponseEntity<String>("Login or password dont matches", HttpStatus.UNAUTHORIZED);
+            
+
+            String token = this.authService.createToken(user);
+
+            return new ResponseEntity<String>(token, HttpStatus.OK);
+    
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return new ResponseEntity<String>("Unknow server error", HttpStatus.BAD_REQUEST);
+        }
+    }
+ 
+    @PostMapping("/subscribe")
+    public ResponseEntity<String> Subscribe(
         @RequestBody UserModel body
-    ) 
+    )
     {
-        if (body.getName() == null || body.getName().isEmpty()) 
-            return ResponseEntity.badRequest().body("Name is required");
-        if (body.getPassword() == null || body.getPassword().isEmpty()) 
-            return ResponseEntity.badRequest().body("Password is required");
-        if(body.getEmail() == null || body.getEmail().isEmpty())
-            return ResponseEntity.badRequest().body("Email is required");
+        System.out.println("Subscribe ");
+        boolean userIfExists = this.userService
+            .findByIdentify(body.getName())
+            .stream().findFirst()
+            .isPresent();
+        if(userIfExists)
+            return new ResponseEntity<>("This username already exists", HttpStatus.UNAUTHORIZED);
+
+        if(!userIfExists)
+            userIfExists = this.userService.findByIdentify(body.getEmail())
+            .stream().findFirst()
+            .isPresent();
+        if(userIfExists)            
+            return new ResponseEntity<>("This email already exists", HttpStatus.UNAUTHORIZED);
+
+            
+        try {
+            UserModel user = new UserModel();       
+            user.setAge(body.getAge());
+            user.setEmail(body.getEmail());
+            user.setName(body.getName());
+            user.setPassword( Password.ApplyHash(body.getPassword()) );
+            user.setFavorites(new ArrayList<SaveLocationDTO>());
+            System.out.println("=========================================== try ===============================================");
+            this.userService.create(user);
+
+            return new ResponseEntity<>("User Created Successfully", HttpStatus.OK);
+            
+        } catch (Exception e) {
+            System.out.print(e);
+            return new ResponseEntity<>("Unknow server error", HttpStatus.BAD_REQUEST);
+        }
 
 
-        
-        UserModel user = new UserModel(){
-            {
-                setName(body.getName());
-                setPassword(body.getPassword());
-                setEmail(body.getEmail());
-                setAge(body.getAge());
-            }
-        };
-        this.userService.create(user);
-        return ResponseEntity.ok("User created");
+
     }
 
-    @PostMapping("/test")
-    public ResponseEntity<String> testFunctions(
-        @RequestBody String body
-    ) 
+    @GetMapping("/test")
+    public String Test(
+        @RequestParam("longitude") String longitude,
+        @RequestParam("latitude") String latitude
+    )
     {
-        
-        String salt = Passwords.GenerateSalt(5);
-        System.out.println(salt);
-        return ResponseEntity.ok(salt);
-    }
+        // return this.userService.GetHash("123", this.userService.GenerateSalt(5));
+        // System.out.println(text);
+        // return text;
+        System.out.println("${latitude}" + latitude);
+        System.out.println("${longitude}" + longitude);
 
+        return "text";
+    }
 }
