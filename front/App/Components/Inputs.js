@@ -102,23 +102,41 @@ const SearchInput = (props) => {
     }
     
     const searchClicked = async () => {
-        const { setPage } = searchPageSlice.actions;
+        const { setPage, setData } = searchPageSlice.actions;
         
-
         let responseArray = [];
-        // props.onSearchClick(latitude, longitude);
-        const res = await GeoapifyService.getCoordsByString(encodeURI(inputValue));
-        const data = res.data.features;
-        data.forEach(coordinates => {
-            responseArray.push({
-                latitude: coordinates.geometry.coordinates[1], 
-                longitude: coordinates.geometry.coordinates[0], 
-                description:`` });
+
+        try {
+            const res = await GeoapifyService.getCoordsByString(encodeURI(inputValue));
+            const data = res.data.features;
+            console.log(data);
+            // const description = `${data[0].properties.address_line1}, ${data[0].properties.address_line2}`
+            data.forEach(coordinates => {
+                responseArray.push({
+                    latitude: coordinates.geometry.coordinates[1], 
+                    longitude: coordinates.geometry.coordinates[0], 
+                    description:`${coordinates.properties.address_line2}`,
+                    label:coordinates.properties.address_line1
+                });
             });
+                
+            props.onSearchClick(responseArray[0].latitude, responseArray[0].longitude);
+            console.log('search clicked');
+            dispatch(setPage("search-options"));
+            //! nao usar redux aqui usar componentização
+            dispatch(setData({
+                label:responseArray[0].label,
+                description:responseArray[0].description,
+                geolocation:{
+                    latitude:responseArray[0].latitude,
+                    longitude:responseArray[0].longitude,
+                }
+            }))
             
-        props.onSearchClick(responseArray[0].latitude, responseArray[0].longitude);
-        console.log('search clicked');
-        dispatch(setPage("search-options"));
+        } catch (error) {
+            dispatch(setPage("none"));
+            
+        }
     }
 
     return (

@@ -4,20 +4,22 @@ import { MenuToolCircleBtn } from "../Buttons"
 
 import favoriteIcon from '../../../assets/Icons/GoldenFavorite.png'
 import routeIcon from '../../../assets/Icons/GoldenRoute.png'
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { searchPageSlice } from "../../Redux/searchPageSlice"
 
 export default SearchRouteCard = ( params ) => {
     
     const dispatch = useDispatch();
     const { setPage } = searchPageSlice.actions;
+    const { locationData } = useSelector((store) => store.searchPage);
+
 
     return(
         <>
             <View style={styles.SearchCardContainer}>
                 <View style={styles.SearchCardHeaderContainer}>
                     <View style={styles.SwipeBar}  />
-                    <Text style={styles.DefaultLabel}>{'params.label'}</Text>
+                    <Text style={styles.DefaultLabel}>{locationData.label}</Text>
                 </View>
                 <View style={styles.SearchCardMainContainer}>
                     <View style={styles.RowContainer}>
@@ -25,7 +27,7 @@ export default SearchRouteCard = ( params ) => {
                         <MenuToolCircleBtn onClick={() => dispatch(setPage('search-save'))} image={favoriteIcon} LabelSide={"bottom"} showLabel={true} label={"Save"} backgroundColor={"#21225B"} />
                     </View>
                 </View>
-                    <Text style={styles.DefaultText}>{'params.description'}</Text>
+                    <Text style={styles.DefaultText}>{locationData.description}</Text>
             </View>
         </>
     )

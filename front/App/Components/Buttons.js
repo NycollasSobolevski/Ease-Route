@@ -43,7 +43,20 @@ const BrandButton = ( params ) => {
         </>
     )
 }
+const IconButton = ( params ) => {
 
+    return (
+        <>
+            <Pressable onPressOut={params.action} > 
+                <Image 
+                    source={params.icon} 
+                    style={[styles.Icon, params.style]} 
+                    
+                />
+            </Pressable>
+        </>
+    )
+}
 const MenuButtons = ( params ) => {
     const nav = useNavigation();
     return(
@@ -141,4 +154,4 @@ const MenuToolCircleBtn = ( params ) => {
     )
 }
 
-export {DefaultBtn, BrandButton, MenuButtons, SearchButton, MenuToolCircleBtn}
+export {DefaultBtn, BrandButton, MenuButtons, SearchButton, MenuToolCircleBtn, IconButton}

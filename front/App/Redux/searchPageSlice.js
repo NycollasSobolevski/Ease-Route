@@ -2,6 +2,11 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const pageInitialValue = {
     value: "none",
+    locationData: {
+        label: "",
+        description: "",
+        geolocation: {},
+    },
 }
 
 export const searchPageSlice = createSlice({
@@ -14,6 +19,10 @@ export const searchPageSlice = createSlice({
         },
         goToInitPage: (state) => {
             state.value = "none";
-        }
+        },
+        setData: (state, action) => {
+            state.locationData = action.payload;
+            console.log(state.locationData);
+        },
     },
 })

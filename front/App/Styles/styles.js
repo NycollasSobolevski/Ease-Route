@@ -1,6 +1,24 @@
 import { StyleSheet } from "react-native"
 // var {vw, vh , vmin, vmax} = require('react-native-viewport-units');
 // 
+
+const colors = {
+    defaultbackgroundcolor: '#152E58',
+    semitransparentbackgroundcolor: '#1d15158a',
+    defaultInputBackgroundColor: '#1d151557',
+    CardBackgroundColor: '#202159E6',
+    defaultColor: '#fff',
+    defaultBtnColor: '#BBB079',
+    
+    defaultShadowColor: '#ffffffb2',
+    defaultInputColor: '#fff',
+    defaultPlaceholderColor: '#797575cb',
+    textColor01: '#21225B',
+    defaultLinkColor:'#BBB079' ,
+    fontFamily01:"LexendTeraBold",
+    fontFamily02:"LexendTeraMedium",
+}
+
 const styles = StyleSheet.create({
     Screen: {
         width :"100%",
@@ -25,6 +43,23 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         borderRadius: 100,
     },
+    CardContainer: {
+        width: "95%",
+        height: "70%",
+        position: "absolute",
+        backgroundColor: colors.CardBackgroundColor,        
+        borderRadius: 20,
+        zIndex:20,
+        alignItems:"center",
+        justifyContent:"space-around",
+        padding:20,
+    },
+    Icon:{
+        width: 30,
+        height: 30,
+        objectFit: "contain",
+    },
+
     //! TEXT STYLES
     DefaultText: {
         // color: "var(--text-color-01)",
@@ -48,6 +83,7 @@ const styles = StyleSheet.create({
     DefaultBtnText: {
         color: "#fff",
         fontSize: 18,
+        fontWeight: "bold",
     },
     DefaultBtnBoldText: {
         // color: "var(--text-color-01)",
@@ -69,7 +105,7 @@ const styles = StyleSheet.create({
         width: 350,
         height: "90%",
         // backgroundColor: 'var(--semitransparent-background-color)',
-        backgroundColor: '#1d15158a',
+        backgroundColor: colors.semitransparentbackgroundcolor,
         alignItems:"center",
         justifyContent:'space-between',
         alignItems:"center",
@@ -191,6 +227,8 @@ const styles = StyleSheet.create({
         backgroundColor:"#00000070",
         zIndex: 1,
     },
+
+    //! SEARCH
     SearchContainer: {
         position: "absolute",
         bottom: 100,
@@ -274,7 +312,7 @@ const styles = StyleSheet.create({
         flexDirection:"row",
         alignItems: "center",
         justifyContent: "center",
-        zIndex:5,
+        zIndex:3,
         position:"absolute",
         top:100
     },
